@@ -1,5 +1,24 @@
+<div *ngIf="errorInWelcomeServiceMessage">
+
+  <span class="text-danger">{{errorInWelcomeServiceMessage}}</span>
+</div>
+
 <p>
   welcome {{name}}
 
   You can manage your todos <a routerLink="/todos">here</a>
 </p>
+
+
+<div>
+<p>
+    click here to get a customized welcome message
+    <button (click)="getWelcomMessageWithPathVariable()" class="btn btn-success">get welcome message</button>
+</p>
+</div>
+
+
+<div *ngIf="welcomeMessageFromService">
+  <h2>Your customized welcome message</h2>
+  {{welcomeMessageFromService}}
+</div>

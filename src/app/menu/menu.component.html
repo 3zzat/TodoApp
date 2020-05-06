@@ -7,19 +7,19 @@
 
     <ul class="navbar-nav">
       <li>
-        <a routerLink="/welcome/in28minutes" class="nav-link">Home</a>
+        <a routerLink="/welcome/in28minutes" class="nav-link" *ngIf="hardCodedAuth.isUserLoggedIn()">Home</a>
       </li>
       <li>
-        <a routerLink="/todos" class="nav-link">Todos</a>
+        <a routerLink="/todos" class="nav-link" *ngIf="hardCodedAuth.isUserLoggedIn()">Todos</a>
       </li>
     </ul>
 
     <ul class="navbar-nav ml-auto">
       <li>
-        <a routerLink="/login" class="nav-link">Login</a>
+        <a routerLink="/login" class="nav-link" *ngIf="!hardCodedAuth.isUserLoggedIn()">Login</a>
       </li>
       <li>
-        <a routerLink="/logout" class="nav-link">logout</a>
+        <a routerLink="/logout" class="nav-link" *ngIf="hardCodedAuth.isUserLoggedIn()">logout</a>
       </li>
     </ul>
   </nav>
