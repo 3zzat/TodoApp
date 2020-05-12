@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { TodoDataServiceService } from '../service/data/todo-data-service.service';
+
 import { TodoDataService } from '../service/data/todo-data.service';
+import { Router } from '@angular/router';
+import { BasicAuthenticationService } from '../service/basic-authentication.service';
 
 export class Todo {
 
@@ -31,15 +33,40 @@ export class ListTodosComponent implements OnInit {
   //   description : 'learn to learn'
   // }
 
+  message: string;
+  username: string;
   todos: Todo[];
-  constructor(private todoDataService: TodoDataService) { }
+  constructor(private todoDataService: TodoDataService, private router: Router, private basicAuthService: BasicAuthenticationService) { }
 
   ngOnInit() {
-    this.todoDataService.retrieveAllTodos('in28minutes').subscribe(
+    this.refreshTodos();
+    this.username = this.basicAuthService.getAuthenticatedUser();
+  }
+
+  refreshTodos() {
+    this.todoDataService.retrieveAllTodos(this.username).subscribe(
       response => {
         this.todos = response;
       }
     );
+  }
+
+  deleteTodo(id) {
+    this.todoDataService.deleteTodo(this.username, id).subscribe(
+      response => {
+        this.message = `Todo ${id} Deleted Successfully`;
+        this.refreshTodos();
+      }
+    );
+  }
+
+
+  updateTodo(id) {
+    this.router.navigate(['todos', id]);
+  }
+
+  addTodo() {
+    this.router.navigate(['todos', -1]);
   }
 
 
